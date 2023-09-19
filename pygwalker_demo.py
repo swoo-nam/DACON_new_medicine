@@ -51,7 +51,7 @@ st.title("Chatbot with Evaluation")
 user_input = st.text_input("Input: ")
 
 # 추론 및 평가 실행 버튼
-if st.button("Generate Response"):
+if st.button("Generate Reply"):
     if user_input:
         st.write("User Input:", user_input)
         text = "<q>" + user_input + "</s><a>"
