@@ -32,7 +32,6 @@ def evaluate_similarity(input_text, generated_text, alpha=0.9): # cosine 가중�
     input_tokens = set(input_text.split())
     generated_tokens = set(generated_text.split())
     jaccard_sim = len(input_tokens.intersection(generated_tokens)) / len(input_tokens.union(generated_tokens))
-    # jaccard_sim = jaccard_score(input_tokens, generated_tokens)
 
     # 가중 평균 내보기
     weighted_sim = alpha*cosine_sim + (1 - alpha)*jaccard_sim
@@ -62,9 +61,9 @@ if st.button("Generate Response"):
         best_generated_text = None
         best_similarity_score = -1.0
         generated_texts = []  # 답변 후보군을 담을 리스트
-        for i in range(10):  # num_samples=10으로 수정
+        for i in range(10):  # num_samples
             result_ids = loaded_model.generate(x,
-                                        max_length=128,  # 수정: max_len 대신 직접 지정
+                                        max_length=64,
                                         repetition_penalty=2.0,
                                         num_beams=2,
                                         num_return_sequences=1,
