@@ -1,3 +1,4 @@
+# streamlit run pygwalker_demo.py
 import streamlit as st
 import pandas as pd
 import re
@@ -11,7 +12,7 @@ DATA_PATH = "C:\python-code\project_final\data/"
 SEED = 42
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-loaded_model = AutoModelForCausalLM.from_pretrained(f"{DATA_PATH}0908_gpt_freeze_all").to(device)
+loaded_model = AutoModelForCausalLM.from_pretrained(f"{DATA_PATH}sohyun_23762_31_loss_0.2067").to(device)
 tokenizer = AutoTokenizer.from_pretrained("skt/kogpt2-base-v2",
                                           bos_token='</s>',
                                           eos_token='</s>',
@@ -53,7 +54,7 @@ user_input = st.text_input("Input: ")
 # 추론 및 평가 실행 버튼
 if st.button("Generate Reply"):
     if user_input:
-        st.write("User Input:", user_input)
+        # st.write("User Input:", user_input)
         text = "<q>" + user_input + "</s><a>"
         x = tokenizer.encode(text, return_tensors="pt").to(device)
         q_len = len(text) + 1
@@ -61,7 +62,7 @@ if st.button("Generate Reply"):
         best_generated_text = None
         best_similarity_score = -1.0
         generated_texts = []  # 답변 후보군을 담을 리스트
-        for i in range(10):  # num_samples
+        for i in range(3):  # num_samples
             result_ids = loaded_model.generate(x,
                                         max_length=64,
                                         repetition_penalty=2.0,
